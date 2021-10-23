@@ -28,6 +28,8 @@ def talk_to_me(update, context):
 def send_shulte(update, context):
     update.callback_query.answer()
     cnt_cells = int(update.callback_query.data)
+    text = f"Создаю таблицу {update.callback_query.data} на {update.callback_query.data}"
+    update.callback_query.edit_message_text(text=text)
     path_to_pict = None
     chat_id = update.effective_chat.id
     create_all_tables()
