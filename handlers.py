@@ -3,7 +3,7 @@ import os
 from settings import IMAGE_DIR
 from trainers.alphabet.create_alphabet import create_alphabet
 from trainers.shulte.create_shulte import create_all_tables
-from common.keyboards import get_keyboard
+from common.keyboards import get_keyboard, options_shulte
 from trainers.pyramid.create_pyramid import create_pyramid
 from utilites.utilites import get_emoji
 
@@ -26,14 +26,15 @@ def talk_to_me(update, context):
 
 
 def send_shulte(update, context):
-    cnt_cells = None
+    update.callback_query.answer()
+    cnt_cells = int(update.callback_query.data)
     path_to_pict = None
     chat_id = update.effective_chat.id
     create_all_tables()
     try:
         # TODO не понятно как в кнопке передать параметр, при этом на изображении кнопки его не выводить
         # выдаю средний размер
-        cnt_cells = 5
+        #cnt_cells = 5
         if cnt_cells not in (3, 5, 7):
             raise ValueError
     except (ValueError, IndexError):
@@ -65,3 +66,7 @@ def send_pyramid(update, context):
     create_pyramid(height)
     chat_id = update.effective_chat.id
     context.bot.send_photo(chat_id=chat_id, photo=open(os.path.join(IMAGE_DIR, 'pyramid.png'), 'rb'))
+
+
+def menu_shulte(update, context):
+    update.message.reply_text("Выберете размер таблицы", reply_markup=options_shulte())
