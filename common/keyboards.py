@@ -2,8 +2,7 @@ from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMa
 
 
 def get_keyboard():
-    return ReplyKeyboardMarkup([["Шульте", "Алфавит", "Пирамида"],
-                                ["Ещё!"]])
+    return ReplyKeyboardMarkup([["Шульте", "Алфавит", "Пирамида"]], resize_keyboard=True)
 
 def options_shulte():
     keyboard =  [
