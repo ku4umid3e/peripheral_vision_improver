@@ -33,8 +33,8 @@ def random_line(d):
 
 
 def _draw_letters(d):
-    h_points = list(range(100, 900, 30))
-    w_points = list(range(100, 900, 30))
+    h_points = list(range(100, 900, 27))
+    w_points = list(range(100, 900, 27))
     random.shuffle(h_points)
     random.shuffle(w_points)
     random.shuffle(ALPHABET)
@@ -46,6 +46,8 @@ def _draw_letters(d):
             letter=let,
             point=(h_point, w_point)
         )
+    missing_litters =(ALPHABET[-1], ALPHABET[-2], ALPHABET[-3])
+    print(missing_litters)
 
 
 def _draw_letter(d,
@@ -66,7 +68,7 @@ def create_alphabet(size_by_side=1000, background="white"):
     repeat
     _draw_letters(d)
     img.save(os.path.join(IMAGE_DIR, 'alphabet.png'))
-
+    
 
 if __name__ == '__main__':
     create_alphabet()
