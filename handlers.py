@@ -1,7 +1,6 @@
 import os
 
 from settings import IMAGE_DIR
-from trainers.alphabet.create_alphabet import create_alphabet
 from trainers.shulte.create_shulte import create_all_tables
 from common.keyboards import get_keyboard, options_shulte
 from trainers.pyramid.create_pyramid import create_pyramid
@@ -12,8 +11,8 @@ def greet_user(update, context):
     username = update.effective_user.first_name
     context.user_data['emoji'] = get_emoji(context.user_data)
     text = f"Здравствуй, пользователь {username} {context.user_data['emoji']}! " \
-           f"Это бот для тренировки периферийного зрения и памяти! Введите /shulte <num_cell> и получите " \
-           f"таблицу Шульте! Доступны варианты на 3, 5, 7 ячеек"
+           f"Это бот для тренировки периферийного зрения и памяти! " \
+           f"Выбери упражнение"
     update.message.reply_text(text, reply_markup=get_keyboard())
 
 
@@ -51,12 +50,6 @@ def send_shulte(update, context):
         path_to_pict = os.path.join(IMAGE_DIR, "shulte_7_x_7.png")
 
     context.bot.send_photo(chat_id=chat_id, photo=open(path_to_pict, 'rb'))
-
-
-def send_alphabet(update, context):
-    chat_id = update.effective_chat.id
-    create_alphabet()
-    context.bot.send_photo(chat_id=chat_id, photo=open(os.path.join(IMAGE_DIR, 'alphabet.png'), 'rb'))
 
 
 def send_pyramid(update, context):
