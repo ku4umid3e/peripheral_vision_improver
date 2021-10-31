@@ -2,6 +2,7 @@ import os
 from posixpath import split
 import random
 import collections
+import time
 
 from PIL import Image, ImageDraw, ImageFont
 from telegram import ReplyKeyboardRemove
@@ -33,7 +34,6 @@ def random_line(d):
        outline='black',
        )
 
-    
     d.line((random.sample(range(10, 990, 100), 4)), width=2)
 
 
@@ -41,11 +41,8 @@ def to_shuffle_alphabet():
     ALPHABET = list("абвгдеёжзийклмнопрстуфхцчшщъыьэюя")
     missing_litters = []
     random.shuffle(ALPHABET)
-#    print(ALPHABET)
     repeat = [missing_litters.append(ALPHABET.pop()) for _ in range(3)]
     repeat
-#    print(ALPHABET)
-#    print(missing_litters)
     return [ALPHABET, missing_litters]
 
 
@@ -60,7 +57,6 @@ def create_letter(letters, d):
                 letter=letter,
                 point=(position_letter_in_height, position_letter_in_width)
                 )
-
 
 
 def _draw_letter(d,
@@ -92,10 +88,11 @@ def create_alphabet():
 
 def start_alphabet(update, context):
     update.message.reply_text(
-            "Пивет, посмотри на картинку, найди и отправь мне отсутствующие три буквы",
+            "Пивет, посмотри на картинку, найди и отправь мне отсутствующие три буквы.\n",
             reply_markup=ReplyKeyboardRemove()
             )
     chat_id = update.effective_chat.id
+    context.user_data['start_time'] = time.time()
     context.user_data['question'] = create_alphabet()
     context.bot.send_photo(chat_id=chat_id, photo=open(os.path.join(IMAGE_DIR, 'alphabet.png'), 'rb'))
     return 'user_letters'
@@ -104,10 +101,7 @@ def start_alphabet(update, context):
 def check_letters(update, context):
     answer = update.message.text.lower().split()
     update.message.reply_text(
-        f"""Тест! Ваш ответ {answer}, а на картинке нету букв:
-        {context.user_data['question'][0]},
-        {context.user_data['question'][1]},
-        {context.user_data['question'][2]}."""
+        f"""Тест! Ваш ответ {answer}, а на картинке нету букв: {context.user_data['question'][0]}, {context.user_data['question'][1]}, {context.user_data['question'][2]}."""
      )
     print(len(answer))
     if len(answer) != 3:
@@ -119,7 +113,16 @@ def check_letters(update, context):
         return 'user_letters'
 
     collections.Counter(answer) == collections.Counter(context.user_data['question'])
-    update.message.reply_text("Верно", reply_markup=get_keyboard())
+    search_time = time.time() - context.user_data['start_time']
+    update.message.reply_text(f"Верно. \nЗатрачено {search_time} секунд", reply_markup=get_keyboard())
+    return ConversationHandler.END
+
+
+def cancel(update, context):
+    update.message.reply_text(
+        'Может в следующий раз', 
+        reply_markup=get_keyboard()
+    )
     return ConversationHandler.END
 
 
