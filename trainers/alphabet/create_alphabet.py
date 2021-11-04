@@ -2,7 +2,7 @@ import os
 from posixpath import split
 import random
 import collections
-import time
+import datetime
 
 from PIL import Image, ImageDraw, ImageFont
 from telegram import ReplyKeyboardRemove
@@ -78,8 +78,6 @@ def create_alphabet():
     repeat = [random_line(draw) for _ in range(5)]
     repeat
     abc = to_shuffle_alphabet()
-    print(len(abc[0]))
-    print(len(abc[1]))
     print(abc[1])
     create_letter(abc[0], draw)
     img.save(os.path.join(IMAGE_DIR, 'alphabet.png'))
@@ -88,11 +86,11 @@ def create_alphabet():
 
 def start_alphabet(update, context):
     update.message.reply_text(
-            "Пивет, посмотри на картинку, найди и отправь мне отсутствующие три буквы.\n",
+            "Отличный выбор!\nПосмотри на картинку, найди и отправь мне отсутствующие три буквы.\n",
             reply_markup=ReplyKeyboardRemove()
             )
     chat_id = update.effective_chat.id
-    context.user_data['start_time'] = time.time()
+    context.user_data['start_time'] = datetime.datetime.now()
     context.user_data['question'] = create_alphabet()
     context.bot.send_photo(chat_id=chat_id, photo=open(os.path.join(IMAGE_DIR, 'alphabet.png'), 'rb'))
     return 'user_letters'
@@ -100,12 +98,8 @@ def start_alphabet(update, context):
 
 def check_letters(update, context):
     answer = update.message.text.lower().split()
-    update.message.reply_text(
-        f"""Тест! Ваш ответ {answer}, а на картинке нету букв: {context.user_data['question'][0]}, {context.user_data['question'][1]}, {context.user_data['question'][2]}."""
-     )
-    print(len(answer))
     if len(answer) != 3:
-        update.message.reply_text(f"Я не понимаю что это {answer}")
+        update.message.reply_text(f"Я не могу разобрать что ты написал: {answer}\nПожалуйста мне нужно только три буквы через пробел")
         return 'user_letters'
 
     elif collections.Counter(answer) != collections.Counter(context.user_data['question']):
@@ -113,8 +107,9 @@ def check_letters(update, context):
         return 'user_letters'
 
     collections.Counter(answer) == collections.Counter(context.user_data['question'])
-    search_time = time.time() - context.user_data['start_time']
-    update.message.reply_text(f"Верно. \nЗатрачено {search_time} секунд", reply_markup=get_keyboard())
+    search_time = datetime.datetime.now() - context.user_data['start_time']
+    h, m, s = time_to_hours_minutes_seconds(search_time)
+    update.message.reply_text(f"Верно. \nНа поиск ответа тебе потребовалось времени:\n {h}ч. {m}м. {s}с. ", reply_markup=get_keyboard())
     return ConversationHandler.END
 
 
@@ -124,6 +119,14 @@ def cancel(update, context):
         reply_markup=get_keyboard()
     )
     return ConversationHandler.END
+
+
+def time_to_hours_minutes_seconds(duration):
+    days, seconds = duration.days, duration.seconds
+    hours = days * 24 + seconds // 3600
+    minutes = (seconds % 3600) // 60
+    seconds = (seconds % 60)
+    return hours, minutes, seconds
 
 
 if __name__ == '__main__':

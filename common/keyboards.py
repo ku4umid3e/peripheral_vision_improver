@@ -13,3 +13,4 @@ def options_shulte():
         ]
     ]
     return InlineKeyboardMarkup(keyboard)
+    
