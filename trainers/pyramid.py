@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import random
 
+from settings import FONT_PATH
 
 def created_img(W: int, H: int):
     """Тут содаётся белый фон для пирамиды"""
@@ -10,7 +11,7 @@ def created_img(W: int, H: int):
 
 def get_words(len_=4):
     """Тут мы отсеиваем подходящие слова из файла"""
-    with open('trainers/pyramid/word_rus.txt', 'r', encoding='utf-8') as file:
+    with open('trainers/word_for_pyramid.txt', 'r', encoding='utf-8') as file:
         return [str.strip(word) for word in file.readlines() if len(str.strip(word)) == len_]
 
 
@@ -39,7 +40,7 @@ def create_pyramid(height):
     # Создаём новое изображение
     img = created_img(W, H)
     # Чтобы пирамида была ровной используем свободный моноширный шрифт
-    font = ImageFont.truetype('font/Fira_Code/static/FiraCode-Regular.ttf', 18)
+    font = ImageFont.truetype(FONT_PATH, 18)
     # Переменая для отсупов между словами по высоте
     space = 0
     text = format_word(height)

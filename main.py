@@ -11,7 +11,7 @@ from handlers import (
                     greet_user, send_shulte, talk_to_me, send_pyramid, 
                     menu_shulte
                     )
-from trainers.alphabet.create_alphabet import check_letters, start_alphabet, cancel
+from trainers.alphabet import check_letters, start_alphabet
 
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
@@ -40,13 +40,13 @@ def main():
         states={
             'user_letters': [MessageHandler(Filters.text, check_letters)]
         },
-        fallbacks=[CommandHandler("cancel", cancel)]
+        fallbacks=[]
     )
 
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(start_alphabet_trainer)
     dp.add_handler(MessageHandler(Filters.regex("^(Шульте)$"), menu_shulte))
-    dp.add_handler(MessageHandler(Filters.regex("^(Пирамида)$"), send_pyramid))
+    dp.add_handler(MessageHandler(Filters.regex("^(Пирамида\s?\d?)$"), send_pyramid))
     dp.add_handler(CallbackQueryHandler(send_shulte))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
 

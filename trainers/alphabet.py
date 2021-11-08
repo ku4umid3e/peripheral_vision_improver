@@ -88,7 +88,8 @@ def create_alphabet():
     #Вызываю функцию генерирующую случайный список из букв и кладу в переменную результат работы
     abc = to_shuffle_alphabet()
     print(abc[1])
-    #Вызаваем функцию рисования букв и передаём ей наш алфавит
+    print(datetime.datetime.now())
+    #Вызаваем функцию рисования букв и передаём ей наш алфавит 
     create_letter(abc[0], draw)
     img.save(os.path.join(IMAGE_DIR, 'alphabet.png'))
     return abc[1]
@@ -96,7 +97,7 @@ def create_alphabet():
 
 def start_alphabet(update, context):
     update.message.reply_text(
-            "Отличный выбор!\nПосмотри на картинку, найди и отправь мне отсутствующие три буквы.\n",
+            "Отличный выбор!\nПосмотри на картинку, найди и отправь мне отсутствующие три буквы.\n Или напиши довольно",
             reply_markup=ReplyKeyboardRemove()
             )
     chat_id = update.effective_chat.id
@@ -108,7 +109,15 @@ def start_alphabet(update, context):
 
 def check_letters(update, context):
     answer = update.message.text.lower().split()
-    if len(answer) != 3:
+    
+    if answer[0] == 'довольно':
+        update.message.reply_text(
+        'Хорошо, может в следующий раз', 
+        reply_markup=get_keyboard()
+        )
+        return ConversationHandler.END
+
+    elif len(answer) != 3:
         update.message.reply_text(f"Я не могу разобрать что ты написал: {answer}\nПожалуйста мне нужно только три буквы через пробел")
         return 'user_letters'
 
@@ -120,14 +129,6 @@ def check_letters(update, context):
     search_time = datetime.datetime.now() - context.user_data['start_time']
     h, m, s = time_to_hours_minutes_seconds(search_time)
     update.message.reply_text(f"Верно. \nНа поиск ответа тебе потребовалось времени:\n {h}ч. {m}м. {s}с. ", reply_markup=get_keyboard())
-    return ConversationHandler.END
-
-
-def cancel(update, context):
-    update.message.reply_text(
-        'Может в следующий раз', 
-        reply_markup=get_keyboard()
-    )
     return ConversationHandler.END
 
 

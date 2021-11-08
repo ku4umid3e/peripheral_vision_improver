@@ -1,9 +1,9 @@
 import os
 
 from settings import IMAGE_DIR
-from trainers.shulte.create_shulte import create_all_tables
+from trainers.shulte import create_all_tables
 from common.keyboards import get_keyboard, options_shulte
-from trainers.pyramid.create_pyramid import create_pyramid
+from trainers.pyramid import create_pyramid
 from utilites.utilites import get_emoji
 
 

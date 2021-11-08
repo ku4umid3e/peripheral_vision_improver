@@ -2,6 +2,8 @@ import random
 
 from PIL import Image, ImageDraw, ImageFont
 
+from settings import FONT_PATH
+
 _coordinate_lines_3_x_3 = [
     (0, 150, 450, 150),
     (0, 300, 450, 300),
@@ -72,7 +74,7 @@ def _draw_num(d,
               size_step: int,
               steps: list,
               size_font=50,
-              font="font/Fira_Code/static/FiraCode-Medium.ttf",
+              font=FONT_PATH,
               color_font="black",
               middle_color="red"):
     font = ImageFont.truetype(font, size_font)
