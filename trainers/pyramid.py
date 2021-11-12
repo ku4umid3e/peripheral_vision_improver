@@ -3,9 +3,9 @@ import random
 
 from settings import FONT_PATH
 
-def created_img(W: int, H: int):
+def created_img(image_width: int, image_height: int):
     """Тут содаётся белый фон для пирамиды"""
-    img = Image.new('RGBA', (W, H), 'white')
+    img = Image.new('RGBA', (image_width, image_height), 'white')
     return img
 
 
@@ -35,10 +35,10 @@ def format_word(number):
 def create_pyramid(height):
     """Строим из полученых слов пирамиду"""
     # Получаем размер изображения на котором будет строится пирамида
-    W = 100 + 65 * height
-    H = 22 * height + 40
+    image_width = 100 + 65 * height
+    image_height = 22 * height + 40
     # Создаём новое изображение
-    img = created_img(W, H)
+    img = created_img(image_width, image_height)
     # Чтобы пирамида была ровной используем свободный моноширный шрифт
     font = ImageFont.truetype(FONT_PATH, 18)
     # Переменая для отсупов между словами по высоте
@@ -46,12 +46,12 @@ def create_pyramid(height):
     text = format_word(height)
     for word in text:
         # Получаем размер слова
-        w, h = font.getsize(word)
+        word_width, word_height = font.getsize(word)
         # добавляем отступ
         space = space + 25
         idraw = ImageDraw.Draw(img)
         idraw.text(
-            ((W - w) / 2, space - (h / 2)),
+            ((image_width - word_width) / 2, space - (word_height / 2)),
             word,
             font=font,
             fill=('#000000'),
