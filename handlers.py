@@ -32,32 +32,21 @@ def send_shulte(update, context):
     path_to_pict = None
     chat_id = update.effective_chat.id
     create_all_tables()
-    try:
-        # TODO не понятно как в кнопке передать параметр, при этом на изображении кнопки его не выводить
-        # выдаю средний размер
-        #cnt_cells = 5
-        if cnt_cells not in (3, 5, 7):
-            raise ValueError
-    except (ValueError, IndexError):
-        update.message.reply_text("введите количество ячеек в формате /shulte <num>(доступно 3, 5, 7)",
-                                  reply_markup=get_keyboard())
 
-    if cnt_cells == 3:
-        path_to_pict = os.path.join(IMAGE_DIR, "shulte_3_x_3.png")
-    elif cnt_cells == 5:
-        path_to_pict = os.path.join(IMAGE_DIR, "shulte_5_x_5.png")
-    elif cnt_cells == 7:
-        path_to_pict = os.path.join(IMAGE_DIR, "shulte_7_x_7.png")
+    size_shulte = {
+        3: "shulte_3_x_3.png",
+        5: "shulte_5_x_5.png",
+        7: "shulte_7_x_7.png",
+    }
+
+    path_to_pict = os.path.join(IMAGE_DIR, size_shulte.get(cnt_cells))
 
     context.bot.send_photo(chat_id=chat_id, photo=open(path_to_pict, 'rb'))
 
 
 def send_pyramid(update, context):
     # Пробуем получить число из сообщения, если не получится отправим запрос на 5 слов
-    try:
-        height = int(update.message.text.split()[-1])
-    except ValueError:
-        height = 5
+    height = int(update.message.text.split()[-1]) if update.message.text.split()[-1].isdigit() else 5
     create_pyramid(height)
     chat_id = update.effective_chat.id
     context.bot.send_photo(chat_id=chat_id, photo=open(os.path.join(IMAGE_DIR, 'pyramid.png'), 'rb'))

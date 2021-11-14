@@ -87,8 +87,6 @@ def create_alphabet():
     repeat
     #Вызываю функцию генерирующую случайный список из букв и кладу в переменную результат работы
     abc = to_shuffle_alphabet()
-    print(abc[1])
-    print(datetime.datetime.now())
     #Вызаваем функцию рисования букв и передаём ей наш алфавит 
     create_letter(abc[0], draw)
     img.save(os.path.join(IMAGE_DIR, 'alphabet.png'))
