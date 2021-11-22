@@ -1,7 +1,7 @@
 import os
 
 from settings import IMAGE_DIR
-from trainers.shulte import create_all_tables
+from trainers.shulte import create_tables
 from common.keyboards import get_keyboard, options_shulte
 from trainers.pyramid import create_pyramid
 from utilites.utilites import get_emoji
@@ -31,15 +31,9 @@ def send_shulte(update, context):
     update.callback_query.edit_message_text(text=text)
     path_to_pict = None
     chat_id = update.effective_chat.id
-    create_all_tables()
+    create_tables(cnt_cells)
 
-    size_shulte = {
-        3: "shulte_3_x_3.png",
-        5: "shulte_5_x_5.png",
-        7: "shulte_7_x_7.png",
-    }
-
-    path_to_pict = os.path.join(IMAGE_DIR, size_shulte.get(cnt_cells))
+    path_to_pict = os.path.join(IMAGE_DIR, "shulte.png")
 
     context.bot.send_photo(chat_id=chat_id, photo=open(path_to_pict, 'rb'))
 
