@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.idea/
+alphabet.png
+pyramid.png
+shulte.png
+setenv.sh
+pyrightconfig.json
+.gitignore
