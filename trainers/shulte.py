@@ -6,15 +6,16 @@ from settings import FONT_PATH
 
 
 class Cell():
+    
     """Этот клас создаёт поле клееток и в слцчайном порядке заполняет их цифрами"""
     def __init__(self, cell_size=150, square_from_cells=3):
-        """Конструктор класса, принимает размер клетки и количество клеток по одной стороне"""
+        """Конструктор класса, принимает размер клетки и количество клеток по одной из сторон"""
         self.cell_size = cell_size
         self.square_from_cells = square_from_cells
 
 
     def create_tables(self):
-        """Метод класса, ничего не принимает, вычисляет размер необходимого изображения, рисует клетки, расставляет цифры. """
+        """Метод класса, ничего не принимает, вычисляет размер необходимого изображения, рисует клетки, расставляет цифры."""
         image = Image.new('RGB', (self.cell_size * self.square_from_cells, self.cell_size * self.square_from_cells), color="white")
         drawer = ImageDraw.Draw(image)
         font = ImageFont.truetype(FONT_PATH, 50)

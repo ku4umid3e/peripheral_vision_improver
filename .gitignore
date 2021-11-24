@@ -129,7 +129,9 @@ dmypy.json
 .pyre/
 
 .idea/
-*.png
+alphabet.png
+pyramid.png
+shulte.png
 setenv.sh
 pyrightconfig.json
 .gitignore

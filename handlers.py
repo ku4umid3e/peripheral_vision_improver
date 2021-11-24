@@ -10,9 +10,9 @@ from utilites.utilites import get_emoji
 def greet_user(update, context):
     username = update.effective_user.first_name
     context.user_data['emoji'] = get_emoji(context.user_data)
-    text = f"Здравствуй, пользователь {username} {context.user_data['emoji']}! " \
+    text = f"Здравствуй, {username} {context.user_data['emoji']}! " \
            f"Это бот для тренировки периферийного зрения и памяти! " \
-           f"Выбери упражнение"
+           f"Выбери упражнение:"
     update.message.reply_text(text, reply_markup=get_keyboard())
 
 
