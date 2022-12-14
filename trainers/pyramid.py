@@ -3,6 +3,7 @@ import random
 
 from settings import FONT_PATH
 
+
 def created_img(image_width: int, image_height: int):
     """Тут содаётся белый фон для пирамиды"""
     img = Image.new('RGBA', (image_width, image_height), 'white')
