@@ -14,7 +14,6 @@ peripheral_training_bot - это бот для Telegram, который умее
 3. Создайте файл .env и создайте в нем переменные:
     ```
     KEY = "Ключ вашего бота"
-    PROXY_URL = "URL socks5-прокси"
-    PROXY_USERNAME = "Username для авторизации на прокси"
-    PROXY_PASSWORD = "Пароль  для авторизации на прокси"
+    DB_LINK = "URL к вашему серверу mongodb+srv"
+    DB_NAME = "Имя колекции"
     ```

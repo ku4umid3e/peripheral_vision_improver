@@ -1,5 +1,6 @@
 import os
 
+from db import get_user, db
 from settings import IMAGE_DIR
 from trainers.shulte import create_tables
 from common.keyboards import get_keyboard, options_shulte
@@ -8,9 +9,9 @@ from utilites.utilites import get_emoji
 
 
 def greet_user(update, context):
-    username = update.effective_user.first_name
+    user = get_user(db, update.effective_user, update.message.chat.id)
     context.user_data['emoji'] = get_emoji(context.user_data)
-    text = f"Здравствуй, {username} {context.user_data['emoji']}! " \
+    text = f"Здравствуй, {user['first_name']} {context.user_data['emoji']}! " \
            f"Это бот для тренировки периферийного зрения и памяти! " \
            f"Выбери упражнение:"
     update.message.reply_text(text, reply_markup=get_keyboard())
@@ -18,10 +19,10 @@ def greet_user(update, context):
 
 def talk_to_me(update, context):
     context.user_data['emoji'] = get_emoji(context.user_data)
-    username = update.effective_user.first_name
+    user = get_user(db, update.effective_user, update.message.chat.id)
     text = update.message.text
     update.message.reply_text(
-        f"""Здравствуй, {username}
+        f"""Здравствуй, {user['first_name']}
         {context.user_data['emoji']}! Ты написал: {text}""",
         reply_markup=get_keyboard())
 
