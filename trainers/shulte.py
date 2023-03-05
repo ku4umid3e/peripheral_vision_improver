@@ -28,19 +28,28 @@ class ShulteTable:
 
     def draw_numbers(self, drawer: ImageDraw.Draw, font: ImageFont):
         """Метод класса, расставляющий цифры"""
-        count = 0
+        # Счётчики для нахождения центральной ячейки.
+        count_x = 0
+        count_y = 0
+        central_cell = self.square_from_cells // 2 + 1
         for x in range(0, self.square_from_cells * self.cell_size, self.cell_size):
+            count_x += 1
             if len(self.numbers) == 0:
                 break
             for y in range(0, self.square_from_cells * self.cell_size, self.cell_size):
-                if count < self.square_from_cells:
-                    count += 1
+                if count_y < self.square_from_cells:
+                    count_y += 1
                     number = self.numbers.pop()
                     text_width, text_height = drawer.textsize(number, font=font)
                     text_x = x + self.cell_size / 2
                     text_y = y + self.cell_size / 2
+
+                    # выделяем центральную цифру красным цветом.
+                    if count_x == central_cell and count_y == central_cell:
+                        drawer.text((text_x, text_y), text=number, fill="red", font=font, anchor="mm")
+                        continue
                     drawer.text((text_x, text_y), text=number, fill="black", font=font, anchor="mm")
-            count = 0
+            count_y = 0
 
     def create_table_image(self):
         """Метод класса, создающий изображение таблицы"""
