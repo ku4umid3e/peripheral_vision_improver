@@ -16,7 +16,7 @@ from trainers.alphabet import check_letters, start_alphabet
 
 
 logging.basicConfig(datefmt='%Y-%m-%d %H:%M',
-                    format='%(name)s - %(levelname)s - %(message)s',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log')
 
