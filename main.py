@@ -15,7 +15,8 @@ from handlers import (
 from trainers.alphabet import check_letters, start_alphabet
 
 
-logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(datefmt='%Y-%m-%d %H:%M',
+                    format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log')
 
@@ -38,7 +39,7 @@ def main():
 
     start_alphabet_trainer = ConversationHandler(
         entry_points=[MessageHandler(
-            Filters.regex("^(Алфавит)$"), start_alphabet
+            Filters.regex('^(Алфавит)$'), start_alphabet
             )],
         states={
             'user_letters': [MessageHandler(Filters.text, check_letters)]
@@ -46,11 +47,11 @@ def main():
         fallbacks=[]
     )
 
-    dp.add_handler(CommandHandler("start", greet_user))
+    dp.add_handler(CommandHandler('start', greet_user))
     dp.add_handler(start_alphabet_trainer)
-    dp.add_handler(MessageHandler(Filters.regex("^(Шульте)$"), menu_shulte))
+    dp.add_handler(MessageHandler(Filters.regex('^(Шульте)$'), menu_shulte))
     dp.add_handler(MessageHandler(
-        Filters.regex("^(Пирамида\s?\d?)$"), send_pyramid
+        Filters.regex('^(Пирамида\s?\d?)$'), send_pyramid
         ))
     dp.add_handler(CallbackQueryHandler(send_shulte))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
@@ -59,5 +60,5 @@ def main():
     shulte_bot.idle()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
