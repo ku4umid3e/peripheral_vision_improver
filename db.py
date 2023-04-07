@@ -1,4 +1,6 @@
 import os
+from datetime import datetime
+
 from pymongo import MongoClient
 
 
@@ -13,6 +15,7 @@ def create_user(db, effective_user, chat_id):
         'last_name': effective_user.last_name,
         'username': effective_user.username,
         'chat_id': chat_id,
+        'date_created': datetime.now(),
     }
     db.users.insert_one(user)
     return user
