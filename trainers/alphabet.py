@@ -51,7 +51,7 @@ def _draw_letter(
         d, size_font, letter, point,
         font=FONT_PATH, color_font="black"):
 
-    """"Эта финкция отвечает за нанесение буквы"""
+    """"Эта функция отвечает за нанесение буквы"""
     font = ImageFont.truetype(font, size_font)
     d.text(point, text=letter, fill=color_font, font=font)
     size_letter = font.getsize(letter)
@@ -64,18 +64,18 @@ def create_letter(letters, d):
     и картинку на которую будет буквы наносить"""
     position_letter_in_height = list(random.sample(range(20, 900, 27), 30))
     position_letter_in_width = list(random.sample(range(20, 900, 27), 30))
-    # Создаём  колекцию кортежей из буквы и её кординат
+    # Создаём  коллекцию кортежей из буквы и её координат
     for letter, position_letter_in_height, position_letter_in_width in zip(
                 letters, position_letter_in_height, position_letter_in_width):
-        # Рисуём букву случайного размера в ёё кординатах
+        # Рисуем букву случайного размера в ёё координатах
         _draw_letter(d, size_font=random.randint(50, 100), letter=letter,
                      point=(position_letter_in_height,
                             position_letter_in_width))
 
 
 def create_alphabet():
-    """Функция создаёт картинку с алфовитом"""
-    # Создаём изаброжение
+    """Функция создаёт картинку с алфавитом"""
+    # Создаём изображение
     img = Image.new('RGB', (1000, 1000), color='white')
     draw = ImageDraw.Draw(img)
     # Рисуем фон из случайных геометрических примитивов
@@ -84,7 +84,7 @@ def create_alphabet():
     # Вызываю функцию генерирующую случайный список
     # из букв и кладу в переменную результат работы
     abc = to_shuffle_alphabet()
-    # Вызаваем функцию рисования букв и
+    # Вызываем функцию рисования букв и
     # передаём ей наш алфавит
     create_letter(abc[0], draw)
     img.save(os.path.join(IMAGE_DIR, 'alphabet.png'))

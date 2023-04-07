@@ -66,6 +66,7 @@ class ShulteTable:
 
 
 def create_tables(cells: int):
-    """Функция для создания экземпляра класса ShulteTable с необходимым количеством клеток/цифр"""
+    """Функция для создания экземпляра класса ShulteTable с необходимым
+    количеством клеток/цифр"""
     table = ShulteTable(square_from_cells=cells)
     table.save_table_image()

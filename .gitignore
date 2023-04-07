@@ -135,3 +135,5 @@ shulte.png
 setenv.sh
 pyrightconfig.json
 .gitignore
+.vscode/
+

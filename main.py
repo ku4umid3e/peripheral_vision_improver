@@ -15,10 +15,12 @@ from handlers import (
 from trainers.alphabet import check_letters, start_alphabet
 
 
-logging.basicConfig(datefmt='%Y-%m-%d %H:%M',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO,
-                    filename='bot.log')
+logging.basicConfig(
+    datefmt='%Y-%m-%d %H:%M',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO,
+    filename='bot.log'
+    )
 
 load_dotenv()
 

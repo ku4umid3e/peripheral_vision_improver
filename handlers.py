@@ -5,7 +5,7 @@ from settings import IMAGE_DIR
 from trainers.shulte import create_tables
 from common.keyboards import get_keyboard, options_shulte
 from trainers.pyramid import create_pyramid
-from utilites.utilites import get_emoji
+from utilities.utilities import get_emoji
 
 
 def greet_user(update, context):
@@ -50,7 +50,7 @@ def send_pyramid(update, context):
         ) if update.message.text.split()[-1].isdigit() else 5
     create_pyramid(height)
     chat_id = update.effective_chat.id
-    update.message.reply_text("Задача простая, смотрим в цетр на звёздочки и "
+    update.message.reply_text("Задача простая, смотрим в центр на звёздочки и "
                               "пытаемся прочитать слово периферийным зрением")
     context.bot.send_photo(
         chat_id=chat_id,
